@@ -1,0 +1,139 @@
+Dog Door Automation:
+  class: TimeSwitch
+  module: timeswitch
+  constrain_days: mon
+  off_phrase: Locking dog door
+  off_times: '7:45:0'
+  on_phrase: Unlocking dog door
+  on_times: '16:0:0'
+  speakers: media_player.living_room_home,media_player.master_bedroom_home,media_player.living_room_speaker,media_player.master_bedroom_speaker
+  switches: switch.dog_door_switch
+Office Light:
+  class: DoorLight
+  light: light.office_level
+  module: doorlight
+  door: binary_sensor.office_door
+  use_sun: 'true'
+Towel Warmer Automation:
+  class: TimeSwitch
+  module: timeswitch
+  off_times: 10:0:0,1:0:0
+  on_times: 4:0:0,15:0:0
+  switches: switch.towel_warmer_switch
+Yard Lights Automation:
+  class: TimeSwitch
+  module: timeswitch
+  off_phrase: ' '
+  off_times: 'sunrise - 3:0:0'
+  on_phrase: ' '
+  on_times: 'sunset - 2:0:0'
+  speakers: media_player.living_room_speaker,media_player.master_bedroom_speaker
+  switches: light.deck_level,light.yard_level,switch.tree
+hello_world:
+  class: HelloWorld
+  module: hello
+Temperature Checker:
+  class: TemperatureChecker
+  module: temperature
+  target: sensor.nest_thermostat_target
+  mode: sensor.nest_thermostat_operation_mode
+  windows: binary_sensor.windows_closed
+  temperature: sensor.nest_thermostat_temperature
+  speakers: media_player.living_room_home
+Blind Control:
+  class: BlindsControl
+  module: blinds_control
+  open_times: 'sunset - 1:0:0'
+  close_times: '9:0:0'
+  speakers: media_player.master_bedroom_home_speaker
+  windows: binary_sensor.master_window_1,binary_sensor.master_window_2
+  open_scene: scene.41157
+  close_scene: scene.59304
+Dog Food:
+  class: DogFood
+  module: dog_food
+  speaker: media_player.living_room_home
+  warning_phrase: The dogs were likely already fed
+  acknowledge_phrase: Recording feeding of the dogs
+Kevin Presence:
+  class: PresenceLock
+  module: presence_lock
+  presence: device_tracker.kevin_tasker
+Model 3 range:
+  class: TeslaCheck
+  module: tesla_check
+  charge_sensor: binary_sensor.tesla_model_3_5yj3e1ea8jf003656_charger_sensor
+  battery_sensor: sensor.tesla_model_3_5yj3e1ea8jf003656_battery_sensor
+  charge_level: 40
+  check_times: 22:05:00, 23:05:00
+  name: Model 3
+Kevin Tesla Charger:
+  class: TeslaCheck
+  module: tesla_check
+  charge_level: 40
+  check_times: 22:00:00, 23:00:00
+Network Notify:
+  class: NetworkNotify
+  module: network_notify
+# FluxTest:
+#   class: LightFlux
+#   module: light_flux
+#   dimmer_start: '23:03:00'
+#   reset_time: '22:28:00'
+#   dimmer_frequency: 1
+#   levels: light.couch_level
+Flux:
+  class: LightFlux
+  module: light_flux
+  start: '20:30:00'
+  finish: '22:30:00'
+Laundry Light:
+  class: DoorLight
+  light: light.laundry_light_level
+  module: doorlight
+  door: binary_sensor.laundry_door
+  use_sun: 'false'
+Hall Bath Fan:
+  module: movementlight
+  class: MovementLight
+  light: switch.hall_bath_fan_switch
+  motion: binary_sensor.hall_toilet
+  timeout: 300
+  use_sun: false
+Hall Bath Scent:
+  module: movementlight
+  class: MovementLight
+  light: switch.hall_bath_outlet
+  motion: binary_sensor.hall_toilet
+  timeout: 1200
+  use_sun: false
+  delay: 300
+Hall Bath Light:
+  module: movementlight
+  class: MovementLight
+  light: light.hall_bath_level
+  motion: binary_sensor.hall_toilet,binary_sensor.hall_bath_door
+  timeout: 120
+Urinal Handle:
+  module: sensor_command
+  class: SensorCommand
+Dryer Monitor:
+  module: dryer_monitor
+  class: DryerMonitor
+Washer Monitor:
+  module: washer_monitor
+  class: WasherMonitor
+#  Closet Light:
+#    module: movementlight
+#    class: MovementLight
+#    light: switch.master_closet_switch
+#    motion: binary_sensor.master_closet_multisensor_motion
+#    use_sun: false
+#    timeout: 0
+#     
+Bathroom Audio:
+  module: bathroom_audio
+  class: BathroomAudio
+  motion: binary_sensor.hall_toilet
+  timeout: 10
+  use_sun: false
