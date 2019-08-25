@@ -27,13 +27,14 @@ class MovementLight(hass.Hass):
                 self.restart_and_activate()
 
     def restart_and_activate(self):
-       self.log("restart_and_activate")
-       if self.timeout_handler is not None:
-           self.log("timer exists, resetting")
-           self.timeout_handler = self.cancel_timer(self.timeout_handler)
-       self.activate()
-       if self.timeout != 0:
-           self.timeout_handler = self.run_in(self.on_timeout, self.timeout)
+        self.log("restart_and_activate")
+        if self.timeout_handler is not None:
+            self.log("timer exists, resetting")
+            self.timeout_handler = self.cancel_timer(self.timeout_handler)
+        self.activate()
+        if self.timeout != 0:
+            self.log("setting timeout")
+            self.timeout_handler = self.run_in(self.on_timeout, self.timeout)
 
     def after_delay(self, *_):
         self.log("after delay")
@@ -47,9 +48,11 @@ class MovementLight(hass.Hass):
 
     def deactivate(self):
         self.log('movement light deactivating')
+        self.timeout_handler = None
         self.turn_off(self.light)
 
     def on_timeout(self, *_):
+        self.log("on timeout")
         # if the motion sensor is still on, don't turn off just yet
         if self.get_motion_state():
             self.log("{} is still detecting movement (state: {}),"

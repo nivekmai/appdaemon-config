@@ -88,11 +88,14 @@ Flux:
   start: '20:30:00'
   finish: '22:30:00'
 Laundry Light:
-  class: DoorLight
+  class: ComplexLight
   light: light.laundry_light_level
-  module: doorlight
-  door: binary_sensor.laundry_door
-  use_sun: 'false'
+  module: complexlight 
+  switch: binary_sensor.laundry_door
+  motion: binary_sensor.laundry_motion
+  use_sun: False
+  # minimum detection interval on bosch motion is 3 minutes
+  timeout: 180
 Hall Bath Fan:
   module: movementlight
   class: MovementLight
