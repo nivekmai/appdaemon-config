@@ -11,7 +11,6 @@ class LightFlux(hass.Hass):
         self.start_level = int(self.args.get('start_level', '255'))
         self.finish_level = int(self.args.get('finish_level', '10'))
         self.reset_time_str = self.args.get('reset_time', '07:00:00')
-        self.reset_time_str = self.args.get('reset_time', '10:22:00')
         self.toggle = self.args.get("toggle", "input_boolean.auto_dimmer")
         self.lights = self.split_device_list(
             self.args.get('levels', "light.laundry_light_level,"
