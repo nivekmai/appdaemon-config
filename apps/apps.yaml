@@ -52,9 +52,20 @@ Blind Control:
 Dog Food:
   class: DogFood
   module: dog_food
+  dog_food: binary_sensor.dog_food
   speaker: media_player.living_room_home
   warning_phrase: The dogs were likely already fed
-  acknowledge_phrase: Recording feeding of the dogs
+  acknowledge_phrase: Marking dogs as fed
+Fish Food:
+  class: DogFood
+  module: dog_food
+  dog_food: binary_sensor.fish_food
+  fed_sensor: binary_senor.fish_fed
+  speaker: media_player.living_room_home
+  warning_phrase: The fish were likely already fed
+  acknowledge_phrase: Marking fish as fed
+  lunch_reset: False
+  dinner_reset: False
 Kevin Presence:
   class: PresenceLock
   module: presence_lock
