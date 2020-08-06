@@ -1,6 +1,6 @@
 import appdaemon.plugins.hass.hassapi as hass
 import datetime
-
+import pprint
 
 class DogFood(hass.Hass):
     def initialize(self):
@@ -10,18 +10,23 @@ class DogFood(hass.Hass):
                                      "media_player.living_room_home")
         self.warning_phrase = self.args.get("warning_phrase",
                                             "dogs were already fed")
-        self.ack_phrase = self.args.get("acknowledge_phase",
+        self.ack_phrase = self.args.get("acknowledge_phrase",
                                         "marking dogs fed")
+        self.lunch_reset = self.args.get("lunch_reset", True)
+        self.dinner_reset = self.args.get("dinner_reset", True)
         self.set_fed(False)
-        self.log('DogFood init: {}'.format(self.__dict__))
+        self.log('DogFood init: {}'.format(pprint.pformat(self.__dict__)))
         self.listen_state(self.on_sensor_change, self.food_sensor)
+
         bfast_start = datetime.time(5, 0, 0)
-        lunch_start = datetime.time(12, 0, 0)
-        dnner_start = datetime.time(15, 0, 0)
-        
         self.run_daily(self.reset_fed, bfast_start)
-        self.run_daily(self.reset_fed, lunch_start)
-        self.run_daily(self.reset_fed, dnner_start)
+        if self.lunch_reset:
+            lunch_start = datetime.time(11, 0, 0)
+            self.run_daily(self.reset_fed, lunch_start)
+        if self.dinner_reset:
+            dnner_start = datetime.time(15, 0, 0)
+            self.run_daily(self.reset_fed, dnner_start)
+        
 
     def set_fed(self, fed):
         self.fed = fed
