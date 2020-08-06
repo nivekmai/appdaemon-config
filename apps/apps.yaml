@@ -1,3 +1,13 @@
+Office Light Automation:
+  class: TimeSwitch
+  module: timeswitch
+  constrain_days: mon,tue,wed,thu,fri
+  off_phrase: Turning off the lights
+  off_times: '18:30:0'
+  on_phrase: Turning on the lights
+  on_times: '6:45:0'
+  speakers: media_player.office
+  switches: light.office_level
 Dog Door Automation:
   class: TimeSwitch
   module: timeswitch
