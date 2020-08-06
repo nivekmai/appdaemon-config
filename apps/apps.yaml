@@ -82,11 +82,11 @@ Network Notify:
 #   reset_time: '22:28:00'
 #   dimmer_frequency: 1
 #   levels: light.couch_level
-Flux:
-  class: LightFlux
-  module: light_flux
-  start: '20:30:00'
-  finish: '22:30:00'
+# Flux:
+#   class: LightFlux
+#   module: light_flux
+#   start: '20:30:00'
+#   finish: '22:30:00'
 Laundry Light:
   class: ComplexLight
   light: light.laundry_light_level
