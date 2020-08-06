@@ -56,6 +56,7 @@ class TemperatureChecker(hass.Hass):
     def say_on_speakers(self, text):
         self.log(text)
         for speaker in self.speakers:
+            self.call_service('notify/living_room', message=text)
             self.call_service('tts/google_say', entity_id=speaker, message=text)
  
 
