@@ -96,18 +96,6 @@ Kevin Tesla Charger:
 Network Notify:
   class: NetworkNotify
   module: network_notify
-# FluxTest:
-#   class: LightFlux
-#   module: light_flux
-#   dimmer_start: '23:03:00'
-#   reset_time: '22:28:00'
-#   dimmer_frequency: 1
-#   levels: light.couch_level
-# Flux:
-#   class: LightFlux
-#   module: light_flux
-#   start: '20:30:00'
-#   finish: '22:30:00'
 Laundry Light:
   class: ComplexLight
   light: light.laundry_light_level
@@ -147,17 +135,38 @@ Dryer Monitor:
 Washer Monitor:
   module: washer_monitor
   class: WasherMonitor
-#  Closet Light:
-#    module: movementlight
-#    class: MovementLight
-#    light: switch.master_closet_switch
-#    motion: binary_sensor.master_closet_multisensor_motion
-#    use_sun: false
-#    timeout: 0
-#     
 Bathroom Audio:
   module: bathroom_audio
   class: BathroomAudio
   motion: binary_sensor.hall_toilet
   timeout: 10
   use_sun: false
+Office Blinds:
+  module: sun_blinds
+  class: SunBlinds
+  covers: cover.office_shade
+  close_elevation: 2
+  open_elevation: 40
+  offset: -10
+  start_azimuth: 20
+  end_azimuth: 160
+#
+# Closet Light:
+#   module: movementlight
+#   class: MovementLight
+#   light: switch.master_closet_switch
+#   motion: binary_sensor.master_closet_multisensor_motion
+#   use_sun: false
+#   timeout: 0#     
+# FluxTest:
+#   class: LightFlux
+#   module: light_flux
+#   dimmer_start: '23:03:00'
+#   reset_time: '22:28:00'
+#   dimmer_frequency: 1
+#   levels: light.couch_level
+# Flux:
+#   class: LightFlux
+#   module: light_flux
+#   start: '20:30:00'
+#   finish: '22:30:00'
