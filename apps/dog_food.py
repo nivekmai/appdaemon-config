@@ -2,20 +2,18 @@ import appdaemon.plugins.hass.hassapi as hass
 import datetime
 import pprint
 
+
 class DogFood(hass.Hass):
     def initialize(self):
         self.food_sensor = self.args.get("dog_food", "binary_sensor.dog_food")
         self.fed_sensor = self.args.get("fed_sensor", "binary_sensor.dogs_fed")
-        self.speaker = self.args.get("speaker",
-                                     "media_player.living_room_home")
-        self.warning_phrase = self.args.get("warning_phrase",
-                                            "dogs were already fed")
-        self.ack_phrase = self.args.get("acknowledge_phrase",
-                                        "marking dogs fed")
+        self.speaker = self.args.get("speaker", "media_player.living_room_home")
+        self.warning_phrase = self.args.get("warning_phrase", "dogs were already fed")
+        self.ack_phrase = self.args.get("acknowledge_phrase", "marking dogs fed")
         self.lunch_reset = self.args.get("lunch_reset", True)
         self.dinner_reset = self.args.get("dinner_reset", True)
         self.set_fed(False)
-        self.log('DogFood init: {}'.format(pprint.pformat(self.__dict__)))
+        self.log("DogFood init: {}".format(pprint.pformat(self.__dict__)))
         self.listen_state(self.on_sensor_change, self.food_sensor)
 
         bfast_start = datetime.time(5, 0, 0)
@@ -26,17 +24,14 @@ class DogFood(hass.Hass):
         if self.dinner_reset:
             dnner_start = datetime.time(15, 0, 0)
             self.run_daily(self.reset_fed, dnner_start)
-        
 
     def set_fed(self, fed):
         self.fed = fed
-        self.set_state(self.fed_sensor, state = "on" if fed else "off")
+        self.set_state(self.fed_sensor, state="on" if fed else "off")
 
     def say(self, text):
         self.log(text)
-        self.call_service('tts/google_say',
-                          entity_id=self.speaker,
-                          message=text)
+        self.call_service("tts/google_say", entity_id=self.speaker, message=text)
 
     def reset_fed(self, *args):
         self.set_fed(False)
