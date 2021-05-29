@@ -17,13 +17,25 @@ Dog Door Automation:
   on_phrase: Unlocking dog door
   on_times: '16:0:0'
   speakers: media_player.living_room_home,media_player.master_bedroom_home,media_player.living_room_speaker,media_player.master_bedroom_speaker
-  switches: switch.dog_door_switch
+  switches: switch.dog_door
+Door Lock Light:
+  class: DoorLight
+  module: doorlight
+  light: light.entry
+  door: lock.front_door
+  use_sun: False
 Office Light:
   class: DoorLight
   light: light.office_level
   module: doorlight
   door: binary_sensor.office_door
   use_sun: 'true'
+Trash Switch Automation:
+  class: TimeSwitch
+  module: timeswitch
+  off_times: 5:30:0
+  on_times: 23:0:0
+  switches: switch.trash_switch
 Towel Warmer Automation:
   class: TimeSwitch
   module: timeswitch
@@ -49,7 +61,7 @@ Temperature Checker:
   mode: sensor.nest_thermostat_operation_mode
   windows: binary_sensor.windows_closed
   temperature: sensor.nest_thermostat_temperature
-  speakers: media_player.living_room_home
+  speakers: media_player.living_room_home, media_player.office, media_player.master_bedroom_home
 Blind Control:
   class: BlindsControl
   module: blinds_control
@@ -150,6 +162,27 @@ Office Blinds:
   offset: -10
   start_azimuth: 20
   end_azimuth: 160
+Office Heater:
+  class: TimeSwitch
+  module: timeswitch
+  off_phrase: Turning off the heater
+  off_times: '18:30:0'
+  on_phrase: Turning on the heater
+  on_times: '6:45:0'
+  speakers: media_player.office
+  switches: switch.office_heater
+Morning Fireplace:
+  module: calendarswitch
+  class: CalendarSwitch
+  off_times: '6:30:0'
+  on_times: 5:15:0,5:45:0,6:15:0
+  calendar: !secret jen_calendar
+  event: work
+  offset_hours: 5
+  credentials: '/home/homeassistant/appdaemon_auth/credentials.json'
+  token: '/home/homeassistant/appdaemon_auth/token.json'
+  speakers: media_player.couch_speaker
+  switches: switch.fireplace
 #
 # Closet Light:
 #   module: movementlight
