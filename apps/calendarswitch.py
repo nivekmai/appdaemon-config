@@ -29,6 +29,7 @@ class CalendarSwitch(hass.Hass):
         # Switches, defined as a comma separated list
         self.switches = self.split_device_list(self.args["switches"])
         self.speakers = self.split_device_list(self.args.get("speakers", ""))
+        self.debug_speaker = self.args.get("debug_speaker")
         # Phrases to be spoken when turning on or off switches, leave empty to
         # not speak
         self.on_phrase = self.args.get("on_phrase")
@@ -53,8 +54,11 @@ class CalendarSwitch(hass.Hass):
 
         self.log(TAG + " init: {}".format(self.__dict__))
 
+        self.run_every(self.every_hour, "now", 60 * 60)
+
         if self.events_in_range():
             self.log(TAG + " events in range from start")
+
 
         for on_time in on_times:
             time = self.parse_time(on_time)
@@ -62,6 +66,18 @@ class CalendarSwitch(hass.Hass):
         for off_time in off_times:
             time = self.parse_time(off_time)
             self.run_daily(self.turn_off_switches, time)
+
+    def every_hour(self, kwargs):
+        self.log(TAG + " trying to get calendar events")
+        try:
+            self.get_events()
+            # self.log(TAG + " success")
+        except:
+            if self.debug_speaker is not None:
+                self.log(TAG + " failed to get calendar events")
+                self.call_service(
+                    "tts/google_say", entity_id=self.debug_speaker, message="failed to get events for Calendar Switch"
+                )
 
     def get_service(self):
         """Get a service client, log in or refresh credentials if necessary"""
@@ -72,10 +88,11 @@ class CalendarSwitch(hass.Hass):
             if creds and creds.expired and creds.refresh_token:
                 creds.refresh(Request())
             else:
-                flow = InstalledAppFlow.from_client_secrets_file(
-                    self.CREDENTIAL_FILE, SCOPES
-                )
-                creds = flow.run_local_server(port=0)
+                raise Exception("token invalid")
+                # flow = InstalledAppFlow.from_client_secrets_file(
+                #     self.CREDENTIAL_FILE, SCOPES
+                # )
+                #creds = flow.run_local_server(port=0)
             # Save the credentials for the next run
             with open(self.TOKEN_FILE, "w") as token:
                 token.write(creds.to_json())

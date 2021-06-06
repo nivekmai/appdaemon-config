@@ -182,6 +182,7 @@ Morning Fireplace:
   credentials: '/home/homeassistant/appdaemon_auth/credentials.json'
   token: '/home/homeassistant/appdaemon_auth/token.json'
   speakers: media_player.couch_speaker
+  debug_speaker: media_player.office
   switches: switch.fireplace
 #
 # Closet Light:
