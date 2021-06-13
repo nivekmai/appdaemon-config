@@ -110,7 +110,7 @@ Network Notify:
   module: network_notify
 Laundry Light:
   class: ComplexLight
-  light: light.laundry_light_level
+  light:  light.laundry
   module: complexlight 
   switch: binary_sensor.laundry_door
   motion: binary_sensor.laundry_motion
