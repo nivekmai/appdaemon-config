@@ -7,7 +7,7 @@ from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 import appdaemon.plugins.hass.hassapi as hass
 
-SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"]
+SCOPES = ["https://www.googleapis.com/auth/calendar"]
 TAG = "CalendarSwitch"
 
 
@@ -15,7 +15,7 @@ class CalendarSwitch(hass.Hass):
     """
     Turn switches on and off at specific times if the trigger times are within offset_hours of a named event on a specific calendar.
 
-    To set up the credentials/token, follow the python quickstart guide (https://developers.google.com/calendar/quickstart/python). Note that you can do this flow on your local machine, and then just copy the credentials.json and token.json files to wherever you're running appdaemon.
+    To set up the token, set up the google calender integration: https://www.home-assistant.io/integrations/calendar.google/. Point "token" to your ".google.token" file in your home assistant directory.
 
     The python libraries used in the quickstart guide are necessary to have installed in the environment that appdaemon runs in.
 
@@ -36,7 +36,6 @@ class CalendarSwitch(hass.Hass):
         self.off_phrase = self.args.get("off_phrase")
         # Authentication files
         self.TOKEN_FILE = self.args.get("token")
-        self.CREDENTIAL_FILE = self.args.get("credentials")
         # Which calendar to look for events in
         self.CALENDAR_ID = self.args.get("calendar")
         # Event name (case insensitive) to look for

@@ -179,8 +179,7 @@ Morning Fireplace:
   calendar: !secret jen_calendar
   event: work
   offset_hours: 5
-  credentials: '/home/homeassistant/appdaemon_auth/credentials.json'
-  token: '/home/homeassistant/appdaemon_auth/token.json'
+  token: '/home/homeassistant/.homeassistant/.google.token'
   speakers: media_player.couch_speaker
   debug_speaker: media_player.office
   switches: switch.fireplace
