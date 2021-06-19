@@ -43,10 +43,10 @@ class CalendarSwitch(hass.Hass):
         # How many hours ahead of event start time can switches trigger in
         self.offset_hours = self.args.get("offset_hours")
 
-        if not self.CALENDAR_ID or not self.TOKEN_FILE or not self.CREDENTIAL_FILE:
+        if not self.CALENDAR_ID or not self.TOKEN_FILE:
             self.log(
                 TAG
-                + " invalid config, 'token', 'credentials', and 'calendar' must be set",
+                + " invalid config, 'token' and 'calendar' must be set",
                 level="ERROR",
             )
             return
