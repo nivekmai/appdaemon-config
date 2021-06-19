@@ -54,9 +54,9 @@ Yard Lights Automation:
 hello_world:
   class: HelloWorld
   module: hello
-Temperature Checker:
-  class: TemperatureChecker
-  module: temperature
+Environment Saver:
+  class: EnvironmentSaver
+  module: environment_saver
   target: sensor.nest_thermostat_target
   mode: sensor.nest_thermostat_operation_mode
   windows: binary_sensor.windows_closed
