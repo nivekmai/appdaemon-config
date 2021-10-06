@@ -1,6 +1,7 @@
 from __future__ import print_function
 import datetime
 import os.path
+import re
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
@@ -40,6 +41,7 @@ class CalendarSwitch(hass.Hass):
         self.CALENDAR_ID = self.args.get("calendar")
         # Event name (case insensitive) to look for
         self.event_name = self.args.get("event")
+        self.event_re = re.compile(self.event_name, re.I)
         # How many hours ahead of event start time can switches trigger in
         self.offset_hours = self.args.get("offset_hours")
 
@@ -127,7 +129,7 @@ class CalendarSwitch(hass.Hass):
     def event_matches(self, event):
         """Check if an event starts within the offset_hours after the current time"""
         self.log(TAG + " check event: " + event["summary"].lower())
-        if event["summary"].lower() == self.event_name.lower():
+        if self.event_re.match(event["summary"]) is not None:
             event_start = self.parse_event_time(event)
             if event_start is None:
                 self.log(TAG + " None event")
