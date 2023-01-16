@@ -1,5 +1,5 @@
 import appdaemon.plugins.hass.hassapi as hass
-
+import pprint
 
 class MovementLight(hass.Hass):
     def initialize(self):
@@ -10,11 +10,7 @@ class MovementLight(hass.Hass):
         self.delay = self.args.get("delay", 0)
         self.timeout_handler = None
         self.delay_handler = None
-        self.log(
-            "Initializing motion sensor light: {} motion: {} timeout: {} use_sun: {} delay: {}".format(
-                self.light, self.motion, self.timeout, self.use_sun, self.delay
-            )
-        )
+        self.log("MovementLight init: {}".format(pprint.pformat(self.__dict__['args'])))
         for motion in self.motion:
             self.log("listening to: {}".format(motion))
             self.listen_state(self.on_motion, motion)
