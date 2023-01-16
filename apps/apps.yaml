@@ -13,11 +13,17 @@ Dog Door Automation:
   module: timeswitch
   constrain_days: mon
   off_phrase: Locking dog door
-  off_times: '7:45:0'
+  off_times: '7:0:0'
+  speakers: media_player.living_room_speaker,media_player.living_room_home
+  switches: switch.dog_door_switch
+Dog Door Automation:
+  class: TimeSwitch
+  module: timeswitch
+  constrain_days: tues
   on_phrase: Unlocking dog door
   on_times: '16:0:0'
-  speakers: media_player.living_room_home,media_player.master_bedroom_home,media_player.living_room_speaker,media_player.master_bedroom_speaker
-  switches: switch.dog_door
+  speakers: media_player.living_room_speaker,media_player.living_room_home
+  switches: switch.dog_door_switch
 Door Lock Light:
   class: DoorLight
   module: doorlight
@@ -30,12 +36,12 @@ Office Light:
   module: doorlight
   door: binary_sensor.office_door
   use_sun: 'true'
-Trash Switch Automation:
-  class: TimeSwitch
-  module: timeswitch
-  off_times: 5:30:0
-  on_times: 23:0:0
-  switches: switch.trash_switch
+# Trash Switch Automation:
+#   class: TimeSwitch
+#   module: timeswitch
+#   off_times: 5:30:0
+#   on_times: 23:0:0
+#   switches: switch.trash_switch
 Towel Warmer Automation:
   class: TimeSwitch
   module: timeswitch
@@ -74,7 +80,8 @@ Blind Control:
 Dog Food:
   class: DogFood
   module: dog_food
-  dog_food: binary_sensor.dog_food
+  dog_food: binary_sensor.dog_food_iaszone_2
+  fed_sensor: binary_sensor.dogs_fed
   speaker: media_player.living_room_home
   warning_phrase: The dogs were likely already fed
   acknowledge_phrase: Marking dogs as fed
@@ -150,7 +157,7 @@ Washer Monitor:
 Bathroom Audio:
   module: bathroom_audio
   class: BathroomAudio
-  motion: binary_sensor.hall_toilet
+  motion: binary_sensor.hall_bath_toilet_lid_iaszone_2
   timeout: 10
   use_sun: false
 Office Blinds:
@@ -162,27 +169,38 @@ Office Blinds:
   offset: -10
   start_azimuth: 20
   end_azimuth: 160
-Office Heater:
-  class: TimeSwitch
-  module: timeswitch
-  off_phrase: Turning off the heater
-  off_times: '18:30:0'
-  on_phrase: Turning on the heater
-  on_times: '6:45:0'
-  speakers: media_player.office
-  switches: switch.office_heater
-Morning Fireplace:
-  module: calendarswitch
-  class: CalendarSwitch
-  off_times: '6:30:0'
-  on_times: 5:15:0,5:45:0,6:15:0
-  calendar: !secret jen_calendar
-  event: work
-  offset_hours: 5
-  token: '/home/homeassistant/.homeassistant/.google.token'
-  speakers: media_player.couch_speaker
-  debug_speaker: media_player.office
-  switches: switch.fireplace
+RGB Clock:
+  module: rgb_clock
+  class: RgbClock
+  light: light.ewelight_zb_cl01_forceonlight
+Entry Light:
+  module: movementlight
+  class: MovementLight
+  light: light.entry
+  motion: binary_sensor.entry_motion_iaszone
+  timeout: 300
+
+#Office Heater:
+#  class: TimeSwitch
+#  module: timeswitch
+#  off_phrase: Turning off the heater
+#  off_times: '18:30:0'
+#  on_phrase: Turning on the heater
+#  on_times: '6:45:0'
+#  speakers: media_player.office
+#  switches: switch.office_heater
+#Morning Fireplace:
+#  module: calendarswitch
+#  class: CalendarSwitch
+#  off_times: '6:30:0'
+#  on_times: 5:15:0,5:45:0,6:15:0
+#  calendar: !secret jen_calendar
+#  event: work
+#  offset_hours: 5
+#  token: '/home/homeassistant/.homeassistant/.google.token'
+#  speakers: media_player.couch_speaker
+#  debug_speaker: media_player.office
+#  switches: switch.fireplace
 #
 # Closet Light:
 #   module: movementlight
