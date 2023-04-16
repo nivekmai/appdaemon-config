@@ -40,6 +40,8 @@ class SunBlinds(hass.Hass):
         self.covers = self.split_device_list(self.args["covers"])
         # offset from calculated position of sun added to cover position
         self.offset = self.args.get("offset", 0)
+        # interval at which to recalculate and reposition shade (in seconds)
+        self.interval = self.args.get("interval", 60)
         config = self.get_plugin_config()
         self.locationInfo = LocationInfo(
             "", "", config["time_zone"], config["latitude"], config["longitude"]
@@ -68,7 +70,7 @@ class SunBlinds(hass.Hass):
                 )
             )
         )
-        self.run_every(self.set_blind_position, "now", 10 * 60)
+        self.run_every(self.set_blind_position, "now", self.interval)
         self.set_blind_position()
 
     def set_blind_position(self, *args):
