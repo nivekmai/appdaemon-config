@@ -1,15 +1,15 @@
 import appdaemon.plugins.hass.hassapi as hass
 import pprint
+from speaker_base import SpeakerBase
 
 
-class TimeSwitch(hass.Hass):
+class TimeSwitch(SpeakerBase):
     def initialize(self):
         # Times, defined as a comma separated list of time_strings
         on_times = self.args.get("on_times")
         off_times = self.args.get("off_times")
         # Switches, defined as a comma separated list
         self.switches = self.split_device_list(self.args["switches"])
-        self.speakers = self.split_device_list(self.args.get("speakers", ""))
         self.on_phrase = self.args.get("on_phrase")
         self.off_phrase = self.args.get("off_phrase")
         pp = pprint.PrettyPrinter(depth=4)
@@ -26,24 +26,14 @@ class TimeSwitch(hass.Hass):
 
     def off_switches(self, kwargs):
         if self.off_phrase:
-            for speaker in self.speakers:
-                self.call_service(
-                    "tts/google_translate_say",
-                    entity_id=speaker,
-                    message=self.off_phrase,
-                )
+            self.say_on_speakers(self.off_phrase)
         for switch in self.switches:
             self.turn_off(switch)
         self.log("turning off")
 
     def on_switches(self, kwargs):
         if self.on_phrase:
-            for speaker in self.speakers:
-                self.call_service(
-                    "tts/google_translate_say",
-                    entity_id=speaker,
-                    message=self.on_phrase,
-                )
+            self.say_on_speakers(self.on_phrase)
         for switch in self.switches:
             self.turn_on(switch)
         self.log("turning on")

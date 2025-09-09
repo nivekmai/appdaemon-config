@@ -1,17 +1,12 @@
 import appdaemon.plugins.hass.hassapi as hass
 import random
-import movementlight as movementlight
+from movementlight import MovementLight
+from speaker_base import SpeakerBase
 import os
 
-MovementLight = movementlight.MovementLight
 
-
-class BathroomAudio(MovementLight):
+class BathroomAudio(MovementLight, SpeakerBase):
     def initialize(self):
-        super(BathroomAudio, self).initialize()
-        self.speakers = self.split_device_list(
-            self.args.get("speakers", "media_player.hall_bath_speaker")
-        )
         # important! no trailing /
         self.root_dir = self.args.get("root_dir", "/homeassistant/www")
         # important! no trailing /

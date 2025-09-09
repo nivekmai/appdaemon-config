@@ -51,9 +51,7 @@ Towel Warmer Automation:
 Yard Lights Automation:
   class: TimeSwitch
   module: timeswitch
-  off_phrase: yard lights on
   off_times: 'sunrise - 3:0:0'
-  on_phrase: yard lights off
   on_times: 'sunset - 2:0:0'
   speakers: media_player.living_room_speaker,media_player.master_bedroom_speaker
   switches: light.deck_level,light.yard_level,switch.tree
@@ -82,7 +80,7 @@ Dog Food:
   module: dog_food
   dog_food: binary_sensor.dog_food_iaszone_2
   fed_sensor: binary_sensor.dogs_fed
-  speaker: media_player.couch_speaker
+  speakers: media_player.couch_speaker
   warning_phrase: The dogs were likely already fed
   acknowledge_phrase: Marking dogs as fed
 Fish Food:
@@ -90,7 +88,7 @@ Fish Food:
   module: dog_food
   dog_food: binary_sensor.fish_food
   fed_sensor: binary_senor.fish_fed
-  speaker: media_player.living_room_home
+  speakers: media_player.living_room_home
   warning_phrase: The fish were likely already fed
   acknowledge_phrase: Marking fish as fed
   lunch_reset: False
@@ -186,6 +184,7 @@ Entry Light:
 Speak Test:
   module: speak_test
   class: SpeakTest
+  speakers: media_player.office
 
 #Office Heater:
 #  class: TimeSwitch

@@ -7,12 +7,13 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 import appdaemon.plugins.hass.hassapi as hass
+from speaker_base import SpeakerBase
 
 SCOPES = ["https://www.googleapis.com/auth/calendar"]
 TAG = "CalendarSwitch"
 
 
-class CalendarSwitch(hass.Hass):
+class CalendarSwitch(SpeakerBase):
     """
     Turn switches on and off at specific times if the trigger times are within offset_hours of a named event on a specific calendar.
 
@@ -29,7 +30,6 @@ class CalendarSwitch(hass.Hass):
         off_times = self.split_device_list(self.args["off_times"])
         # Switches, defined as a comma separated list
         self.switches = self.split_device_list(self.args["switches"])
-        self.speakers = self.split_device_list(self.args.get("speakers", ""))
         self.debug_speaker = self.args.get("debug_speaker")
         # Phrases to be spoken when turning on or off switches, leave empty to
         # not speak
@@ -163,11 +163,7 @@ class CalendarSwitch(hass.Hass):
         if not self.events_in_range():
             return
         if self.off_phrase:
-            for speaker in self.speakers:
-                self.log(TAG + " tts/google_say " + self.off_phrase)
-                self.call_service(
-                    "tts/google_say", entity_id=speaker, message=self.off_phrase
-                )
+            self.say_on_speakers(self.off_phrase)
         for switch in self.switches:
             self.turn_off(switch)
         self.log("turning off")
@@ -176,10 +172,7 @@ class CalendarSwitch(hass.Hass):
         if not self.events_in_range():
             return
         if self.on_phrase:
-            for speaker in self.speakers:
-                self.call_service(
-                    "tts/google_say", entity_id=speaker, message=self.on_phrase
-                )
+            self.say_on_speakers(self.on_phrase)
         for switch in self.switches:
             self.turn_on(switch)
         self.log("turning on")

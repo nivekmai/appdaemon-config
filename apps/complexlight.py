@@ -1,12 +1,9 @@
-import movementlight as movementlight
-
-MovementLight = movementlight.MovementLight
+from movementlight import MovementLight
 
 
 class ComplexLight(MovementLight):
     def initialize(self):
         self.switch = self.args["switch"]
-        MovementLight.initialize(self)
         self.log(
             "Initializing complex light: {} motion: {} timeout: {} use_sun: {}".format(
                 self.light, self.motion, self.timeout, self.use_sun

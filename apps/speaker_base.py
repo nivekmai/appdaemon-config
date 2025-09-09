@@ -13,4 +13,3 @@ class SpeakerBase(hass.Hass):
             self.call_service(
                 "tts/google_translate_say", entity_id=speaker, message=text
             )
-            # self.call_service("notify/living_room", message=text)

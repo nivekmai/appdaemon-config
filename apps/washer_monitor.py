@@ -1,14 +1,14 @@
 import appdaemon.plugins.hass.hassapi as hass
+from speaker_base import SpeakerBase
 
 
-class WasherMonitor(hass.Hass):
+class WasherMonitor(SpeakerBase):
     def initialize(self):
         self.state_sensor = self.args.get("state_sensor", "sensor.washer_state")
         self.power_sensor = self.args.get("power_sensor", "sensor.washer_power")
         self.fill_power_low = float(self.args.get("fill_power_low", "4"))
         self.fill_power_high = float(self.args.get("fill_power_high", "7"))
         self.power_low = float(self.args.get("power_low", "300"))
-        self.speaker = self.args.get("speaker", "media_player.couch_speaker")
         self.finish_phrase = self.args.get(
             "finish_phrase", "The washing machine has finished"
         )
@@ -20,10 +20,6 @@ class WasherMonitor(hass.Hass):
     def set_power_state(self, state):
         self.power_state = state
         self.set_state(self.state_sensor, state=state)
-
-    def say(self, text):
-        self.log(text)
-        self.call_service("tts/google_say", entity_id=self.speaker, message=text)
 
     def is_filling(self, value):
         return value > self.fill_power_low and value < self.fill_power_high
@@ -47,4 +43,4 @@ class WasherMonitor(hass.Hass):
                 self.set_power_state("rinsing")
         elif new == 0:
             self.set_power_state("off")
-            self.say(self.finish_phrase)
+            self.say_on_speakers(self.finish_phrase)

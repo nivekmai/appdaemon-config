@@ -1,15 +1,15 @@
 import appdaemon.plugins.hass.hassapi as hass
 import datetime
 import math
+from speaker_base import SpeakerBase
 
 
-class DryerMonitor(hass.Hass):
+class DryerMonitor(SpeakerBase):
     def initialize(self):
         self.state_sensor = self.args.get("state_sensor", "sensor.dryer_state")
         self.time_sensor = self.args.get("time_sensor", "sensor.dryer_time")
         self.power_sensor = self.args.get("power_sensor", "sensor.dryer_power")
         self.power_low = float(self.args.get("power_low", "300"))
-        self.speaker = self.args.get("speaker", "media_player.couch_speaker")
         self.finish_phrase = self.args.get("finish_phrase", "The dryer has finished")
         self.power_state = "off"
         self.set_power_state("off")
@@ -23,10 +23,6 @@ class DryerMonitor(hass.Hass):
 
     def set_time_state(self, state):
         self.set_state(self.time_sensor, state=state)
-
-    def say(self, text):
-        self.log(text)
-        self.call_service("tts/google_say", entity_id=self.speaker, message=text)
 
     def get_remaining_minutes(self):
         started = self.get_state(self.state_sensor, attribute="last_changed")
@@ -51,4 +47,4 @@ class DryerMonitor(hass.Hass):
             self.set_power_state("on")
         elif new == 0 and self.power_state == "on":
             self.set_power_state("off")
-            self.say(self.finish_phrase)
+            self.say_on_speakers(self.finish_phrase)

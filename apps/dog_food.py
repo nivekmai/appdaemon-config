@@ -1,13 +1,13 @@
 import appdaemon.plugins.hass.hassapi as hass
 import datetime
 import pprint
+from speaker_base import SpeakerBase
 
 
-class DogFood(hass.Hass):
+class DogFood(SpeakerBase):
     def initialize(self):
         self.food_sensor = self.args.get("dog_food", "binary_sensor.dog_food")
         self.fed_sensor = self.args.get("fed_sensor", "binary_sensor.dogs_fed")
-        self.speaker = self.args.get("speaker", "media_player.living_room_home")
         self.warning_phrase = self.args.get("warning_phrase", "dogs were already fed")
         self.ack_phrase = self.args.get("acknowledge_phrase", "marking dogs fed")
         self.lunch_reset = self.args.get("lunch_reset", True)
@@ -30,10 +30,7 @@ class DogFood(hass.Hass):
         self.set_state(self.fed_sensor, state="on" if fed else "off")
 
     def say(self, text):
-        self.log(text)
-        self.call_service(
-            "tts/google_translate_say", entity_id=self.speaker, message=text
-        )
+        self.say_on_speakers(text)
         self.call_service("notify/android_tv_fire_tv", message=text)
 
     def reset_fed(self, *args):
