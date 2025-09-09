@@ -68,15 +68,15 @@ Environment Saver:
   windows: binary_sensor.windows_closed
   temperature: sensor.nest_thermostat_temperature
   speakers: media_player.living_room_home, media_player.office, media_player.master_bedroom_home
-Blind Control:
-  class: BlindsControl
-  module: blinds_control
-  open_times: 'sunset - 1:0:0'
-  close_times: '9:0:0'
-  speakers: media_player.master_bedroom_home_speaker
-  windows: binary_sensor.master_window_1,binary_sensor.master_window_2
-  open_scene: scene.41157
-  close_scene: scene.59304
+#Blind Control:
+#  class: BlindsControl
+#   module: blinds_control
+#   open_times: 'sunset - 1:0:0'
+#   close_times: '9:0:0'
+#   speakers: media_player.master_bedroom_home_speaker
+#   windows: binary_sensor.master_window_1,binary_sensor.master_window_2
+#   open_scene: scene.41157
+#   close_scene: scene.59304
 Dog Food:
   class: DogFood
   module: dog_food
@@ -162,15 +162,15 @@ Bathroom Audio:
   motion: binary_sensor.hall_bath_toilet_lid_iaszone_2
   timeout: 10
   use_sun: false
-Office Blinds:
-  module: sun_blinds
-  class: SunBlinds
-  covers: cover.office_shade
-  close_elevation: 2
-  open_elevation: 40
-  offset: -10
-  start_azimuth: 20
-  end_azimuth: 160
+#Office Blinds:
+#  module: sun_blinds
+#  class: SunBlinds
+#  covers: cover.office_shade
+#  close_elevation: 2
+#  open_elevation: 40
+#  offset: -10
+#  start_azimuth: 20
+#  end_azimuth: 160
 Eve RGB Clock:
   module: rgb_clock
   class: RgbClock
