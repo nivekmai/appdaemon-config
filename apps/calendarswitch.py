@@ -47,8 +47,7 @@ class CalendarSwitch(hass.Hass):
 
         if not self.CALENDAR_ID or not self.TOKEN_FILE:
             self.log(
-                TAG
-                + " invalid config, 'token' and 'calendar' must be set",
+                TAG + " invalid config, 'token' and 'calendar' must be set",
                 level="ERROR",
             )
             return
@@ -59,7 +58,6 @@ class CalendarSwitch(hass.Hass):
 
         if self.events_in_range():
             self.log(TAG + " events in range from start")
-
 
         for on_time in on_times:
             time = self.parse_time(on_time)
@@ -77,7 +75,9 @@ class CalendarSwitch(hass.Hass):
             if self.debug_speaker is not None:
                 self.log(TAG + " failed to get calendar events")
                 self.call_service(
-                    "tts/google_say", entity_id=self.debug_speaker, message="failed to get events for Calendar Switch"
+                    "tts/google_say",
+                    entity_id=self.debug_speaker,
+                    message="failed to get events for Calendar Switch",
                 )
 
     def get_service(self):
@@ -93,7 +93,7 @@ class CalendarSwitch(hass.Hass):
                 # flow = InstalledAppFlow.from_client_secrets_file(
                 #     self.CREDENTIAL_FILE, SCOPES
                 # )
-                #creds = flow.run_local_server(port=0)
+                # creds = flow.run_local_server(port=0)
             # Save the credentials for the next run
             with open(self.TOKEN_FILE, "w") as token:
                 token.write(creds.to_json())

@@ -87,8 +87,9 @@ class LightFlux(hass.Hass):
 
     def on_schedule(self, *args):
         reset = False
-        if self.reset_time < datetime.now() and datetime.now() < self.reset_time + timedelta(
-            minutes=1
+        if (
+            self.reset_time < datetime.now()
+            and datetime.now() < self.reset_time + timedelta(minutes=1)
         ):
             self.level = self.start_level
             reset = True

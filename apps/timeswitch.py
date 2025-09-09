@@ -28,7 +28,9 @@ class TimeSwitch(hass.Hass):
         if self.off_phrase:
             for speaker in self.speakers:
                 self.call_service(
-                    "tts/google_translate_say", entity_id=speaker, message=self.off_phrase
+                    "tts/google_translate_say",
+                    entity_id=speaker,
+                    message=self.off_phrase,
                 )
         for switch in self.switches:
             self.turn_off(switch)
@@ -38,7 +40,9 @@ class TimeSwitch(hass.Hass):
         if self.on_phrase:
             for speaker in self.speakers:
                 self.call_service(
-                    "tts/google_translate_say", entity_id=speaker, message=self.on_phrase
+                    "tts/google_translate_say",
+                    entity_id=speaker,
+                    message=self.on_phrase,
                 )
         for switch in self.switches:
             self.turn_on(switch)

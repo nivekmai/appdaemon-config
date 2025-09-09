@@ -13,7 +13,7 @@ class DogFood(hass.Hass):
         self.lunch_reset = self.args.get("lunch_reset", True)
         self.dinner_reset = self.args.get("dinner_reset", True)
         self.set_fed(False)
-        self.log("DogFood init: {}".format(pprint.pformat(self.__dict__['args'])))
+        self.log("DogFood init: {}".format(pprint.pformat(self.__dict__["args"])))
         self.listen_state(self.on_sensor_change, self.food_sensor)
 
         bfast_start = datetime.time(5, 0, 0)
@@ -32,8 +32,8 @@ class DogFood(hass.Hass):
     def say(self, text):
         self.log(text)
         self.call_service(
-                "tts/google_translate_say", entity_id=self.speaker, message=text
-            )
+            "tts/google_translate_say", entity_id=self.speaker, message=text
+        )
         self.call_service("notify/android_tv_fire_tv", message=text)
 
     def reset_fed(self, *args):
