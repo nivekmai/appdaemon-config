@@ -147,9 +147,10 @@ Hall Bath Light:
   light: light.hall_bath_level
   motion: binary_sensor.hall_toilet,binary_sensor.hall_bath_door
   timeout: 120
-Urinal Handle:
-  module: sensor_command
-  class: SensorCommand
+# replaced by automation using switch command
+# Urinal Handle:
+#   module: sensor_command
+#   class: SensorCommand
 Dryer Monitor:
   module: dryer_monitor
   class: DryerMonitor
