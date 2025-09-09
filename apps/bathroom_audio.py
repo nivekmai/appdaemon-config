@@ -13,16 +13,18 @@ class BathroomAudio(MovementLight):
             self.args.get("speakers", "media_player.hall_bath_speaker")
         )
         # important! no trailing /
-        self.root_dir = self.args.get("root_dir", "/var/www/www")
+        self.root_dir = self.args.get("root_dir", "/homeassistant/www")
         # important! no trailing /
-        self.audio_path = self.args.get("audio_path", "braud")
+        self.audio_path = self.args.get("audio_path", "audio")
+        # self.log(os.listdir("/config"))
 
+    # Override
     def activate(self):
         self.log("bathroom audio activate")
         (_, _, filenames) = next(os.walk(os.path.join(self.root_dir, self.audio_path)))
         selection = random.randint(0, len(filenames) - 1)
         audio = filenames[selection]
-        url = "https://www.nivekmai.com/{}/{}".format(self.audio_path, audio)
+        url = "https://home.nivekmai.com/local/{}/{}".format(self.audio_path, audio)
         for speaker in self.speakers:
             self.log("Playing {} on {}".format(url, speaker))
             self.call_service(
@@ -32,6 +34,7 @@ class BathroomAudio(MovementLight):
                 media_content_type="audio/mp3",
             )
 
+    # Override
     def deactivate(self):
         self.log("bathroom audio deactivate")
         for speaker in self.speakers:
