@@ -51,9 +51,9 @@ Towel Warmer Automation:
 Yard Lights Automation:
   class: TimeSwitch
   module: timeswitch
-  off_phrase: ' '
+  off_phrase: yard lights on
   off_times: 'sunrise - 3:0:0'
-  on_phrase: ' '
+  on_phrase: yard lights off
   on_times: 'sunset - 2:0:0'
   speakers: media_player.living_room_speaker,media_player.master_bedroom_speaker
   switches: light.deck_level,light.yard_level,switch.tree
