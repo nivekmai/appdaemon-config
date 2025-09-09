@@ -11,31 +11,33 @@ class RgbClock(hass.Hass):
     def initialize(self):
         # Lights, defined as a comma separated list of time_strings
         self.light = self.args.get("light")
-        pp = pprint.PrettyPrinter(depth=4)
-        self.log("RgbClock init: {}".format(pp.pformat(self.__dict__["args"])))
+        self.blink_hour = self.args.get("blink_hour", "true") == "true"
+        app = pprint.PrettyPrinter(depth=4)
+        self.log("RgbClock init: {}".format(pprint.pformat(self.__dict__["args"])))
         time = datetime.time(0, 0, 0)
         self.run_minutely(self.on_minute, time)
 
 
     def on_minute(self, kwargs):
         time = datetime.datetime.now()
-        hour = (time.hour - 12) if time.hour > 12 else time.hour
+        hour = (time.hour - 12) if time.hour >= 12 else time.hour
+        blinks = 12 if hour == 0 else hour
         minute = time.minute
         # hour = 8
         # minute = 30
         val = ((hour * 60) + minute) / 2
-        if minute == 0:
-            for i in range(0, hour):
+        if self.blink_hour and minute == 0:
+            for i in range(0, blinks):
                 self.run_in(self.go_off, 2*i)
                 self.run_in(self.go_white, 2*i+1)
             self.run_in(self.go_off, 2*hour)
             self.run_in(self.go_color, 2*hour+1, val=val)
-        if minute == 30:
+        if self.blink_hour and minute == 30:
             self.run_in(self.go_off, 0)
             self.run_in(self.go_color, 3, val=val)
-        else:
+        if minute % 10 == 0:
             self.run_in(self.go_color, 0, val=val)
-        self.log('The time is {:%H:%M}. The value is {}'.format(time, val))
+            self.log('The time is {:%H:%M}. The value is {}'.format(time, val))
         
     def go_color(self, kwargs):
         self.call_service("light/turn_on", entity_id = self.light, hs_color = [kwargs["val"], 100])
