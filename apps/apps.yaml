@@ -82,7 +82,7 @@ Dog Food:
   module: dog_food
   dog_food: binary_sensor.dog_food_iaszone_2
   fed_sensor: binary_sensor.dogs_fed
-  speaker: media_player.living_room_home
+  speaker: media_player.couch_speaker
   warning_phrase: The dogs were likely already fed
   acknowledge_phrase: Marking dogs as fed
 Fish Food:
@@ -102,16 +102,18 @@ Kevin Presence:
 Model 3 range:
   class: TeslaCheck
   module: tesla_check
-  charge_sensor: binary_sensor.tesla_model_3_5yj3e1ea8jf003656_charger_sensor
-  battery_sensor: sensor.tesla_model_3_5yj3e1ea8jf003656_battery_sensor
+  charge_sensor: binary_sensor.j3n_charging
+  battery_sensor: sensor.j3n_battery
   charge_level: 40
-  check_times: 22:05:00, 23:05:00
+  check_times: 20:05:00, 21:05:00
   name: Model 3
 Kevin Tesla Charger:
   class: TeslaCheck
   module: tesla_check
   charge_level: 40
-  check_times: 22:00:00, 23:00:00
+  check_times: 20:00:00, 21:00:00
+  charge_sensor: binary_sensor.charging
+  battery_sensor: sensor.battery
 Network Notify:
   class: NetworkNotify
   module: network_notify
@@ -169,10 +171,11 @@ Office Blinds:
   offset: -10
   start_azimuth: 20
   end_azimuth: 160
-RGB Clock:
+Eve RGB Clock:
   module: rgb_clock
   class: RgbClock
-  light: light.ewelight_zb_cl01_forceonlight
+  blink_hour: false
+  light: light.my_rest_light
 Entry Light:
   module: movementlight
   class: MovementLight
