@@ -182,6 +182,9 @@ Entry Light:
   light: light.entry
   motion: binary_sensor.entry_motion_iaszone
   timeout: 300
+Speak Test:
+  module: speak_test
+  class: SpeakTest
 
 #Office Heater:
 #  class: TimeSwitch
