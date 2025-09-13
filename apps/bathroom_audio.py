@@ -5,6 +5,13 @@ from speaker_base import SpeakerBase
 import os
 
 
+"""
+splitting audio:
+
+ffmpeg -i input.mp3 -f segment -segment_time 600 -c:a libmp3lame -b:a 192k output_%03d.mp3
+"""
+
+
 class BathroomAudio(MovementLight, SpeakerBase):
     def initialize(self):
         # important! no trailing /
